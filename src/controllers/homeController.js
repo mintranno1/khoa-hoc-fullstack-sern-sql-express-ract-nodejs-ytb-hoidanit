@@ -1,7 +1,14 @@
+import db from '../models/index';
 
-let getHomePage = (req, res) => {
-    return res.render('homepage.ejs');
-    //app.set("views", "./src/views"); - có đoạn này bên config > viewEngine nên nó chỉ cần gọi tên file view homepage.ejs nó tự tìm kiếm hiển thị
+let getHomePage = async (req, res) => {
+    try {
+        let data = await db.User.findAll();
+        return res.render('homepage.ejs', {
+            data : JSON.stringify(data)
+        });
+    }catch{
+        console.log(e)
+    }
 }
 
 let getAboutPage = (req, res) => {
@@ -9,6 +16,6 @@ let getAboutPage = (req, res) => {
 }
 
 module.exports = {
-    getHomePage : getHomePage,
-    getAboutPage : getAboutPage,
+    getHomePage: getHomePage,
+    getAboutPage: getAboutPage,
 }
